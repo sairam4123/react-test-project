@@ -4,8 +4,14 @@ import { IconContext } from "react-icons";
 import { FaTrash } from "react-icons/fa";
 import { useTasks } from "../hooks/useTasks";
 import { MouseEvent } from "react";
+import { twMerge } from "tailwind-merge";
 
-export function TaskItem({ task }: { task: ITaskData }) {
+type TaskItemProps = {
+    task: ITaskData;
+    highlight?: string;
+};
+
+export function TaskItem({ task, highlight }: TaskItemProps) {
     const { removeTask, toggleTask, updateTask } = useTasks();
 
     function handleCheck() {
@@ -30,9 +36,13 @@ export function TaskItem({ task }: { task: ITaskData }) {
 
     return (
         <div
-            className={`flex max-w-md w-full rounded-lg text-white bg-blue-700 p-2 m-1 hover:bg-blue-500 ${
-                task.finished && "bg-blue-950 hover:bg-blue-900"
-            }`}
+            className={twMerge(
+                `flex max-w-2xl w-full rounded-md text-white bg-sky-700 p-2 m-1 hover:bg-sky-500 active:bg-blue-800`,
+                `${
+                    task.finished &&
+                    "bg-blue-700 hover:bg-blue-600 active:bg-sky-800"
+                }`
+            )}
             onClick={handleClick}>
             <input
                 type="checkbox"
@@ -44,16 +54,18 @@ export function TaskItem({ task }: { task: ITaskData }) {
             <EditableText
                 strike={task.finished}
                 text={task.name}
+                highlight={highlight}
                 onTextChanged={handleTextChange}
             />
 
             <Button
-                style="error"
-                className="px-1"
+                buttonStyle="error"
+                aria-label={`delete ${task.id}`}
+                className="px-1.5 rounded-full"
                 onClick={handleRemoveBtnClick}>
                 <IconContext.Provider
                     value={{
-                        className: "w-3.5 h-3.5",
+                        className: "w-3 h-3 text-red-50",
                     }}>
                     <FaTrash />
                 </IconContext.Provider>

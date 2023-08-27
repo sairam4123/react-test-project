@@ -1,16 +1,23 @@
 import { useState } from "react";
+import { twMerge } from "tailwind-merge";
+
+type EditableTextProps = {
+    text: string;
+    strike?: boolean;
+    children?: React.ReactNode;
+    highlight?: string,
+    className?: string,
+    onTextChanged?: (text: string) => any;
+};
 
 export function EditableText({
     text,
-    strike,
+    strike = false,
+    className,
     onTextChanged,
     children,
-}: {
-    text: string;
-    strike: boolean;
-    onTextChanged: (text: string) => any;
-    children?: React.ReactNode;
-}) {
+    highlight
+}: EditableTextProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [textState, setTextState] = useState(text);
 
@@ -37,35 +44,44 @@ export function EditableText({
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         setTextState(event.target.value);
+
+        if (onTextChanged === undefined) return;
         onTextChanged(event.target.value);
     }
 
     if (isEditing) {
         return (
-            <input
-                type="text"
-                onBlur={handleSubmit}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-                value={textState}
-                autoFocus={true}
-                className={`min-w-fit bg-inherit rounded-lg w-full pl-1 mx-1 ${
-                    strike && "line-through"
-                }`}
-            />
+            <div className={twMerge("w-full min-w-fit select-none", className)}>
+                <input
+                    type="text"
+                    onBlur={handleSubmit}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                    value={textState}
+                    autoFocus={true}
+                    className={twMerge(
+                        `min-w-fit w-full max-w-lg bg-inherit rounded-lg pl-1 mx-1 pr-5 ${
+                            strike && "line-through"
+                        }`,
+                        className
+                    )}
+                />
+            </div>
         );
     } else {
         return (
-            <div className="w-full min-w-fit select-none">
+            <div className={twMerge("w-full min-w-fit select-none", className)}>
                 <span
-                    className={`select-none cursor-text pl-1 mx-1 pr-5 ${
-                        strike && "line-through"
-                    }`}
-                    onClick={handleClick}
-                    onDoubleClick={handleDoubleClick}>
+                    className={twMerge(
+                        `select-none cursor-text pl-1 mx-1 pr-5 ${
+                            strike && "line-through"
+                        }`,
+                        className
+                    )}
+                    onClick={handleDoubleClick}>
                     {textState}
-                    {children}
                 </span>
+                {children}
             </div>
         );
     }
