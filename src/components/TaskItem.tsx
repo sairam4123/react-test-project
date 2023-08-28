@@ -56,12 +56,14 @@ export function TaskItem({ task, highlight }: TaskItemProps) {
                 text={task.name}
                 highlight={highlight}
                 onTextChanged={handleTextChange}
+                className="pr-5 pl-1"
+                parentClassName="max-w-md w-full"
             />
 
             <Button
                 buttonStyle="error"
                 aria-label={`delete ${task.id}`}
-                className="px-1.5 rounded-full"
+                className="ml-3 px-1.5 rounded-full"
                 onClick={handleRemoveBtnClick}>
                 <Icon className="w-3 h-3 text-red-50">
                     <FaTrash />

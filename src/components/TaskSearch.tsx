@@ -22,15 +22,17 @@ export function TaskSearch({
 
     return (
         <div className="flex max-w-lg w-full min-w-fit my-2">
-            <div className="flex items-center max-w-lg max-h-full h-full w-full rounded-lg p-2 bg-slate-800 text-white enabled::bg-slate-900 focus-within:outline focus-within:outline-2">
-                <button onClick={() => inputRef.current?.focus()}>
-                    <Icon className="flex m-1 mr-2 justify-center w-4 h-4 text-white">
+            <div className="flex items-center cursor-text max-w-lg max-h-full h-full w-full rounded-lg p-2 bg-slate-800 text-white enabled::bg-slate-900 focus-within:outline focus-within:outline-2">
+                <button
+                    onClick={() => inputRef.current?.focus()}
+                    className="cursor-text">
+                    <Icon className="scale-x-[-1] flex m-1 mr-2 justify-center w-4 h-4 text-white/60">
                         <FaSearch />
                     </Icon>
                 </button>
                 <input
                     type="search"
-                    placeholder="Find or create a task..."
+                    placeholder="Find or add a task..."
                     className={twMerge(
                         "flex max-w-lg max-h-full h-full w-full rounded-lg pl-1 placeholder:italic bg-transparent outline-none my-1",
                         className

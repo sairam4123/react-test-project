@@ -19,6 +19,7 @@ function App() {
                     <EditableText
                         text={todoListTitle}
                         className="font-extrabold text-lg text-white text-center h-fit"
+                        parentClassName="flex items-center justify-center"
                         onTextChanged={handleTextChange}
                     />
                     <hr className="max-w-lg w-full border-y-[3px] my-1 rounded-full" />

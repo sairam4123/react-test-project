@@ -6,6 +6,7 @@ type EditableTextProps = {
     strike?: boolean;
     children?: React.ReactNode;
     highlight?: string;
+    parentClassName?: string;
     className?: string;
     onTextChanged?: (text: string) => any;
 };
@@ -14,6 +15,7 @@ export function EditableText({
     text,
     strike = false,
     className,
+    parentClassName,
     onTextChanged,
     children,
     highlight,
@@ -52,7 +54,11 @@ export function EditableText({
 
     if (isEditing) {
         return (
-            <div className={twMerge("w-full min-w-fit select-none", className)}>
+            <div
+                className={twMerge(
+                    "w-full min-w-fit select-none",
+                    parentClassName
+                )}>
                 <input
                     type="text"
                     onBlur={handleSubmit}
@@ -61,7 +67,7 @@ export function EditableText({
                     value={textState}
                     autoFocus={true}
                     className={twMerge(
-                        `min-w-fit w-full max-w-lg bg-inherit rounded-lg pl-1 mx-1 pr-5 ${
+                        `min-w-fit w-full max-w-lg bg-inherit rounded-lg mx-1 ${
                             strike && "line-through"
                         }`,
                         className
@@ -71,10 +77,14 @@ export function EditableText({
         );
     } else {
         return (
-            <div className={twMerge("w-full min-w-fit select-none", className)}>
+            <div
+                className={twMerge(
+                    "w-full max-w-lg min-w-fit select-none",
+                    parentClassName
+                )}>
                 <span
                     className={twMerge(
-                        `select-none cursor-text pl-1 mx-1 pr-5 ${
+                        `select-none cursor-text mx-1 ${
                             strike && "line-through"
                         }`,
                         className
