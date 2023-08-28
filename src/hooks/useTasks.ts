@@ -5,8 +5,6 @@ export function useTasks() {
     const { todos, setTodos } = useContext(TasksContext) as TodoContextType;
 
     function createTask(task_data: Omit<ITaskData, "id">) {
-        console.log(todos.length);
-        console.log(todos);
         setTodos([
             ...todos,
             {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EditableText } from "./components/EditableText";
-import NavBar from "./components/NavBar";
+import { NavBar } from "./components/NavBar";
 import { TasksList } from "./components/TaskList";
 import { TasksProvider } from "./contexts/TasksContext";
 
@@ -23,7 +23,7 @@ function App() {
                     />
                     <hr className="max-w-lg w-full border-y-[3px] my-1 rounded-full" />
                     <TasksProvider>
-                        <TasksList listTitle={todoListTitle}/>
+                        <TasksList listTitle={todoListTitle} />
                     </TasksProvider>
                 </main>
             </div>

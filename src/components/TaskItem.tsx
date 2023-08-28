@@ -1,10 +1,10 @@
 import { EditableText } from "./EditableText";
 import { Button } from "./Button";
-import { IconContext } from "react-icons";
 import { FaTrash } from "react-icons/fa";
 import { useTasks } from "../hooks/useTasks";
 import { MouseEvent } from "react";
 import { twMerge } from "tailwind-merge";
+import { Icon } from "./Icon";
 
 type TaskItemProps = {
     task: ITaskData;
@@ -63,12 +63,9 @@ export function TaskItem({ task, highlight }: TaskItemProps) {
                 aria-label={`delete ${task.id}`}
                 className="px-1.5 rounded-full"
                 onClick={handleRemoveBtnClick}>
-                <IconContext.Provider
-                    value={{
-                        className: "w-3 h-3 text-red-50",
-                    }}>
+                <Icon className="w-3 h-3 text-red-50">
                     <FaTrash />
-                </IconContext.Provider>
+                </Icon>
             </Button>
         </div>
     );

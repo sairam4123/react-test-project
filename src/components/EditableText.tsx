@@ -5,8 +5,8 @@ type EditableTextProps = {
     text: string;
     strike?: boolean;
     children?: React.ReactNode;
-    highlight?: string,
-    className?: string,
+    highlight?: string;
+    className?: string;
     onTextChanged?: (text: string) => any;
 };
 
@@ -16,12 +16,13 @@ export function EditableText({
     className,
     onTextChanged,
     children,
-    highlight
+    highlight,
 }: EditableTextProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [textState, setTextState] = useState(text);
 
     function handleDoubleClick(event: React.MouseEvent<HTMLInputElement>) {
+        event.preventDefault();
         event.stopPropagation();
         setIsEditing(true);
     }
@@ -31,6 +32,8 @@ export function EditableText({
     }
 
     function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+        event.preventDefault();
+
         if (event.key === "Enter") {
             handleSubmit();
         } else if (event.key === "Escape") {
@@ -38,11 +41,9 @@ export function EditableText({
         }
     }
 
-    function handleClick(event: React.MouseEvent<HTMLInputElement>) {
-        event.stopPropagation();
-    }
-
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        event.preventDefault();
+
         setTextState(event.target.value);
 
         if (onTextChanged === undefined) return;
@@ -82,6 +83,7 @@ export function EditableText({
                     {textState}
                 </span>
                 {children}
+                {false && highlight}
             </div>
         );
     }

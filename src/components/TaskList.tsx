@@ -3,21 +3,17 @@ import { useTasks } from "../hooks/useTasks";
 import { TaskItem } from "./TaskItem";
 import { TaskSearch } from "./TaskSearch";
 import { Button } from "./Button";
-import { IconContext } from "react-icons";
 import { FaPlus } from "react-icons/fa";
+import { Icon } from "./Icon";
 
 type TaskListProps = {
-    listTitle: string
-}
+    listTitle: string;
+};
 
-export function TasksList({listTitle}: TaskListProps) {
+export function TasksList({ listTitle }: TaskListProps) {
     const { todos: tasks, createTask } = useTasks();
 
     const [searchText, setSearchText] = useState("");
-
-    function handleSearchChanged(text: string) {
-        setSearchText(text);
-    }
 
     function handleAddBtnClick(event?: React.MouseEvent) {
         if (event === undefined) {
@@ -25,6 +21,8 @@ export function TasksList({listTitle}: TaskListProps) {
         }
 
         if (!searchText) return;
+
+        setSearchText("");
 
         createTask({
             name: searchText,
@@ -37,7 +35,7 @@ export function TasksList({listTitle}: TaskListProps) {
     );
     return (
         <>
-            <TaskSearch onSearch={handleSearchChanged} />
+            <TaskSearch search={searchText} setSearchText={setSearchText} />
             <div className="max-w-md min-w-fit w-full flex flex-col overflow-y-auto overflow-x-hidden max-h-48 px-2 mx-1">
                 {filteredTasks.map((_task: ITaskData) => {
                     return (
@@ -56,14 +54,13 @@ export function TasksList({listTitle}: TaskListProps) {
                     className="flex text-white min-w-fit max-w-lg w-full py-2 my-2 justify-center items-center"
                     onClick={handleAddBtnClick}>
                     <span className="flex px-4">
-                        <IconContext.Provider
-                            value={{
-                                className: "flex w-4 h-4 text-white m-1",
-                            }}>
+                        <Icon className="flex w-4 h-4 text-white m-1">
                             <FaPlus />
-                        </IconContext.Provider>
+                        </Icon>
                         Add "{searchText}" to&#160;
-                        <span className="font-bold h-fit w-fit">{listTitle}</span>
+                        <span className="font-bold h-fit w-fit">
+                            {listTitle}
+                        </span>
                     </span>
                 </Button>
             )}
