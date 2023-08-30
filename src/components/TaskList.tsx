@@ -36,7 +36,7 @@ export function TasksList({ listTitle }: TaskListProps) {
     return (
         <>
             <TaskSearch search={searchText} setSearchText={setSearchText} />
-            <div className="max-w-md min-w-fit w-full flex flex-col overflow-y-auto overflow-x-hidden max-h-48 px-2 mx-1">
+            <div className="max-w-xl min-w-fit w-full flex flex-col justify-center items-center overflow-y-auto overflow-x-hidden max-h-64 px-2 mx-1">
                 {filteredTasks.map((_task: ITaskData) => {
                     return (
                         <TaskItem

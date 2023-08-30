@@ -8,8 +8,6 @@ interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
     onClick?: (event?: React.MouseEvent<HTMLButtonElement>) => any;
 }
 
-// use tailwind-merge here, probably cva package too
-// best would be to use radix-ui or shadcn-ui
 export function Button({
     buttonStyle,
     className,

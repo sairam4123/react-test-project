@@ -5,6 +5,7 @@ import { useTasks } from "../hooks/useTasks";
 import { MouseEvent } from "react";
 import { twMerge } from "tailwind-merge";
 import { Icon } from "./Icon";
+import { CheckBox } from "./CheckBox";
 
 type TaskItemProps = {
     task: ITaskData;
@@ -37,19 +38,20 @@ export function TaskItem({ task, highlight }: TaskItemProps) {
     return (
         <div
             className={twMerge(
-                `flex max-w-2xl w-full rounded-md text-white bg-sky-700 p-2 m-1 hover:bg-sky-500 active:bg-blue-800`,
+                `flex flex-row max-h-fit h-full max-w-lg w-full rounded-md text-white bg-sky-700 p-2 m-1 hover:bg-sky-500 active:bg-blue-800`,
                 `${
                     task.finished &&
                     "bg-blue-700 hover:bg-blue-600 active:bg-sky-800"
                 }`
             )}
             onClick={handleClick}>
-            <input
+            {/* <input
                 type="checkbox"
-                className="w-5 ml-1"
+                className="flex w-5 h-5 bg-white items-center justify-center appearance-none"
                 checked={task.finished}
                 onChange={handleCheck}
-            />
+            /> */}
+            <CheckBox checked={task.finished} onChange={handleCheck} />
 
             <EditableText
                 strike={task.finished}
@@ -57,7 +59,7 @@ export function TaskItem({ task, highlight }: TaskItemProps) {
                 highlight={highlight}
                 onTextChanged={handleTextChange}
                 className="pr-5 pl-1"
-                parentClassName="max-w-md w-full"
+                parentClassName="max-w-lg w-full"
             />
 
             <Button

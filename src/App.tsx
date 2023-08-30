@@ -18,7 +18,7 @@ function App() {
                 <main className="flex flex-col w-full items-center justify-center">
                     <EditableText
                         text={todoListTitle}
-                        className="font-extrabold text-lg text-white text-center h-fit"
+                        className="font-extrabold text-lg text-white text-center h-fit px-4"
                         parentClassName="flex items-center justify-center"
                         onTextChanged={handleTextChange}
                     />
