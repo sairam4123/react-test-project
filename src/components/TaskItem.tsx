@@ -54,7 +54,7 @@ export function TaskItem({ task, highlight }: TaskItemProps) {
             <CheckBox
                 checked={task.finished}
                 onChange={handleCheck}
-                className="fill-teal-700 bg-sky-100 hover:fill-sky-500 hover:bg-sky-200 peer-focus:outline-none peer-focus:ring-1 peer-focus:border peer-focus:ring-sky-100"
+                className="fill-teal-700 bg-sky-100 hover:fill-sky-600 hover:bg-sky-200 peer-focus:outline-none peer-focus:ring-1 peer-focus:border peer-focus:ring-sky-100"
             />
 
             <EditableText

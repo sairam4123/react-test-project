@@ -22,20 +22,19 @@ export function CheckBox({
     ...checkProps
 }: ICheckBox) {
     const [checkedState, setCheckedState] = useState(checked);
-    const inputCheckboxRef = useRef<HTMLInputElement | null>(null);
+    const inputButtonRef = useRef<HTMLButtonElement | null>(null);
 
     function handleClick(event: React.MouseEvent<HTMLSpanElement>) {
         event.preventDefault();
-        inputCheckboxRef.current?.focus();
+        inputButtonRef.current?.focus();
         setCheckedState(!checkedState);
     }
 
-    function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
+    function handleSubmit(event: React.FormEvent<HTMLButtonElement>) {
         event.preventDefault();
-        if (event.key === "Enter") {
-            setCheckedState(!checkedState);
-        }
+        setCheckedState(!checkedState);
     }
+
     useEffect(() => {
         setCheckedState(checked);
     }, [checked]);
@@ -45,13 +44,18 @@ export function CheckBox({
             <span
                 className="flex my-auto items-center justify-center"
                 onClick={handleClick}>
+                <button
+                    role="checkbox"
+                    ref={inputButtonRef}
+                    className="peer sr-only"
+                    onSubmit={handleSubmit}
+                />
                 <input
                     type="checkbox"
-                    ref={inputCheckboxRef}
-                    className="peer sr-only"
+                    className="sr-only"
                     checked={checkedState}
                     onChange={onChange}
-                    onKeyUp={handleKeyUp}
+                    disabled
                     {...checkProps}
                 />
                 <Icon
