@@ -25,7 +25,8 @@ export function TaskSearch({
             <div className="flex items-center cursor-text max-w-lg max-h-full h-full w-full rounded-lg p-2 bg-slate-800 text-white enabled::bg-slate-900 focus-within:outline focus-within:outline-2">
                 <button
                     onClick={() => inputRef.current?.focus()}
-                    className="cursor-text">
+                    onFocus={() => inputRef.current?.focus()}
+                    className="cursor-text focus:outline-none">
                     <Icon className="scale-x-[-1] flex m-1 mr-2 justify-center w-4 h-4 text-white/60">
                         <FaSearch />
                     </Icon>

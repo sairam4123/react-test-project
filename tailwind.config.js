@@ -8,7 +8,7 @@ export default {
     },
     plugins: [
         plugin(function ({ addVariant }) {
-            addVariant("content-editable", '&[contentEditable="true"]');
+            addVariant("content-editable", "&[contentEditable]");
         }),
     ],
 };

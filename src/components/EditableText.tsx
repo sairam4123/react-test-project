@@ -30,7 +30,7 @@ export function EditableText({
     // }
 
     function handleSubmit() {
-        spanRef.current?.setAttribute("contentEditable", `${false}`);
+        spanRef.current?.removeAttribute("contentEditable");
         spanRef.current?.blur();
     }
 
@@ -46,8 +46,9 @@ export function EditableText({
 
     function handleClick(event: React.MouseEvent<HTMLInputElement>) {
         event.preventDefault();
+        event.stopPropagation();
         spanRef.current?.focus();
-        spanRef.current?.setAttribute("contentEditable", `${true}`)
+        spanRef.current?.toggleAttribute("contentEditable", true);
     }
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -98,9 +99,9 @@ export function EditableText({
                 )}
                 ref={spanRef}
                 onKeyDown={handleKeyDown}
+                onBlur={handleSubmit}
                 onChange={handleChange}
-                onClick={handleClick}
-                contentEditable={false}>
+                onClick={handleClick}>
                 {textState}
             </span>
             {children}
