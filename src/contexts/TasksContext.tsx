@@ -10,28 +10,7 @@ export type TodoContextType = {
 };
 
 const initialState: TasksState = {
-    todos: [
-        {
-            id: 1n,
-            name: "Test Task",
-            finished: true,
-        },
-        {
-            id: 2n,
-            name: "Test Task",
-            finished: false,
-        },
-        {
-            id: 3n,
-            name: "Test Task",
-            finished: false,
-        },
-        {
-            id: 4n,
-            name: "Test Task",
-            finished: false,
-        },
-    ],
+    todos: [],
 };
 
 export const TasksContext = createContext<TodoContextType | null>(null);

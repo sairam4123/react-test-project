@@ -9,7 +9,7 @@ export function useTasks() {
             ...todos,
             {
                 ...task_data,
-                id: BigInt(todos.length + 1),
+                id: BigInt(+new Date()),
             },
         ]);
     }
