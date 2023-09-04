@@ -9,7 +9,11 @@ export type TodoContextType = {
     setTodos: (todos: ITaskData[]) => any;
 };
 
-const initialState: TasksState = {
+const storedState: TasksState | null = JSON.parse(
+    localStorage.getItem("state") || "{}"
+);
+
+const initialState: TasksState = storedState ?? {
     todos: [],
 };
 
@@ -20,7 +24,8 @@ export function TasksProvider({ children }: { children?: React.ReactNode }) {
 
     const setTodos = (todos: ITaskData[]) => {
         console.log(todos);
-        return setState({ todos });
+        setState({ todos });
+        localStorage.setItem("state", JSON.stringify({ todos }));
     };
 
     return (

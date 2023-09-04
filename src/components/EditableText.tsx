@@ -8,6 +8,7 @@ type EditableTextProps = {
     highlight?: string;
     parentClassName?: string;
     className?: string;
+    defaultText?: string;
     onTextChanged?: (text: string) => any;
 };
 
@@ -18,23 +19,24 @@ export function EditableText({
     parentClassName,
     onTextChanged,
     children,
+    defaultText,
     highlight,
 }: EditableTextProps) {
     const [textState, setTextState] = useState(text);
+    const [isEditing, setIsEditing] = useState(false);
 
     const spanRef = useRef<HTMLSpanElement | null>(null);
-    // function handleDoubleClick(event: React.MouseEvent<HTMLInputElement>) {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    //     setIsEditing(true);
-    // }
 
     function handleSubmit() {
-        spanRef.current?.removeAttribute("contentEditable");
-        spanRef.current?.blur();
+        const currentText = textState || (defaultText ?? "");
+        setTextState(currentText);
+
+        onTextChanged?.(currentText);
+
+        setIsEditing(false);
     }
 
-    function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    function handleKeyDown(event: React.KeyboardEvent<HTMLSpanElement>) {
         if (event.key === "Enter") {
             event.preventDefault();
             handleSubmit();
@@ -44,63 +46,58 @@ export function EditableText({
         }
     }
 
-    function handleClick(event: React.MouseEvent<HTMLInputElement>) {
+    function handleClick(event: React.MouseEvent<HTMLSpanElement>) {
         event.preventDefault();
         event.stopPropagation();
-        spanRef.current?.focus();
-        spanRef.current?.toggleAttribute("contentEditable", true);
+        setIsEditing(true);
     }
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         event.preventDefault();
 
-        setTextState(event.target.value);
+        const currentText = event.target.value ?? textState;
+        setTextState(currentText);
 
-        if (onTextChanged === undefined) return;
-        onTextChanged(event.target.value);
+        onTextChanged?.(currentText);
     }
 
-    // if (isEditing) {
-    //     return (
-    //         <div
-    //             className={twMerge(
-    //                 "w-full min-w-fit select-none",
-    //                 parentClassName
-    //             )}>
-    //             <input
-    //                 type="text"
-    //                 onBlur={handleSubmit}
-    //                 onChange={handleChange}
-    //                 onKeyDown={handleKeyDown}
-    //                 value={textState}
-    //                 autoFocus={true}
-    //                 className={twMerge(
-    //                     `min-w-fit w-full max-w-lg bg-inherit rounded-lg mx-1 ${
-    //                         strike && "line-through text-gray-500"
-    //                     }`,
-    //                     className
-    //                 )}
-    //             />
-    //         </div>
-    //     );
-    // } else {
     return (
         <div
             className={twMerge(
                 "w-full max-w-lg min-w-fit select-none",
                 parentClassName
             )}>
+            {isEditing && (
+                <input
+                    type="text"
+                    onBlur={handleSubmit}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                    value={textState}
+                    autoFocus={true}
+                    className={twMerge(
+                        `max-w-lg bg-inherit rounded-lg px-4 mx-1 ${
+                            strike && "line-through text-gray-500"
+                        }`,
+
+                        className
+                    )}
+                    style={{
+                        width:
+                            (spanRef.current?.offsetWidth ?? 0) +
+                            24 /* +24 px */,
+                    }}
+                />
+            )}
             <span
                 className={twMerge(
                     `select-none cursor-text mx-1 content-editable:focus:rounded-lg ${
-                        strike && "line-through text-slate-400 "
+                        strike && "line-through text-zinc-400 "
                     }`,
+                    `${isEditing && "absolute opacity-0 whitespace-pre"}`,
                     className
                 )}
                 ref={spanRef}
-                onKeyDown={handleKeyDown}
-                onBlur={handleSubmit}
-                onChange={handleChange}
                 onClick={handleClick}>
                 {textState}
             </span>
@@ -108,5 +105,4 @@ export function EditableText({
             {false && highlight}
         </div>
     );
-    // }
 }

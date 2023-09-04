@@ -1,5 +1,5 @@
 interface ITaskData {
-    id: bigint,
+    id: number,
     name: string,
     finished: boolean
 }

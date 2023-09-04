@@ -9,7 +9,7 @@ export function useTasks() {
             ...todos,
             {
                 ...task_data,
-                id: BigInt(+new Date()),
+                id: +new Date(),
             },
         ]);
     }
@@ -29,10 +29,21 @@ export function useTasks() {
 
     function updateTask(
         taskId: ITaskData["id"],
-        task: Pick<ITaskData, "name" | "finished">
+        task: Partial<Omit<ITaskData, "id">>
     ) {
         setTodos(todos.map((t) => (t.id === taskId ? { ...t, ...task } : t)));
     }
 
-    return { todos, createTask, removeTask, toggleTask, updateTask };
+    function replaceTask(taskId: ITaskData["id"], task: ITaskData) {
+        setTodos(todos.map((t) => (t.id === taskId ? { ...task } : t)));
+    }
+
+    return {
+        todos,
+        createTask,
+        removeTask,
+        toggleTask,
+        replaceTask,
+        updateTask,
+    };
 }

@@ -19,6 +19,7 @@ export function CheckBox({
     checked,
     onChange,
     className,
+    disabled,
     ...checkProps
 }: ICheckBox) {
     const [checkedState, setCheckedState] = useState(checked);
@@ -26,6 +27,11 @@ export function CheckBox({
 
     function handleClick(event: React.MouseEvent<HTMLSpanElement>) {
         event.preventDefault();
+        event.stopPropagation();
+        if (disabled) {
+            console.log(disabled);
+            return;
+        }
         inputButtonRef.current?.focus();
         setCheckedState(!checkedState);
     }
@@ -48,6 +54,7 @@ export function CheckBox({
                     role="checkbox"
                     ref={inputButtonRef}
                     className="peer sr-only"
+                    disabled={disabled}
                     onSubmit={handleSubmit}
                 />
                 <input
@@ -61,6 +68,7 @@ export function CheckBox({
                 <Icon
                     className={twMerge(
                         "w-5 h-5 fill-red-500 bg-red-200 rounded-full border hover:fill-red-400 hover:bg-red-100 peer-focus:outline-none peer-focus:ring-1 peer-focus:border peer-focus:ring-red-100",
+                        "peer-disabled:fill-gray-400 peer-disabled:bg-gray-200",
                         className
                     )}>
                     {checkedState ? <FaCheckCircle /> : <FaCircle />}

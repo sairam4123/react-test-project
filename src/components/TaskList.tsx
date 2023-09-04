@@ -20,6 +20,10 @@ export function TasksList({ listTitle }: TaskListProps) {
             return;
         }
 
+        handleSearchEnter();
+    }
+
+    function handleSearchEnter() {
         if (!searchText) return;
 
         setSearchText("");
@@ -35,7 +39,11 @@ export function TasksList({ listTitle }: TaskListProps) {
     );
     return (
         <>
-            <TaskSearch search={searchText} setSearchText={setSearchText} />
+            <TaskSearch
+                search={searchText}
+                setSearchText={setSearchText}
+                onEnterText={handleSearchEnter}
+            />
             <div className="max-w-lg min-w-fit w-full flex flex-col justify-start items-center overflow-y-visible overflow-x-hidden max-h-64 scroll-smooth">
                 {filteredTasks.map((_task: ITaskData) => {
                     return (

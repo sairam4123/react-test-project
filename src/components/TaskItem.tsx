@@ -20,7 +20,7 @@ export function TaskItem({ task, highlight }: TaskItemProps) {
     }
 
     function handleTextChange(text: string) {
-        updateTask(task.id, { ...task, name: text });
+        updateTask(task.id, { name: text });
     }
 
     function handleClick() {
@@ -61,8 +61,9 @@ export function TaskItem({ task, highlight }: TaskItemProps) {
                 strike={task.finished}
                 text={task.name}
                 highlight={highlight}
+                defaultText="Untitled task"
                 onTextChanged={handleTextChange}
-                className="pr-5 pl-1"
+                className="px-1"
                 parentClassName="max-w-lg w-full"
             />
 

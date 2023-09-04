@@ -6,12 +6,14 @@ import { Icon } from "./Icon";
 interface TaskSearchProps {
     className?: string;
     search: string;
+    onEnterText?: () => void;
     setSearchText: (text: string) => void;
 }
 
 export function TaskSearch({
     search,
     setSearchText,
+    onEnterText,
     className,
 }: TaskSearchProps) {
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -20,9 +22,21 @@ export function TaskSearch({
         setSearchText(event.target.value);
     }
 
+    function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            onEnterText?.();
+        } else if (event.key === "Escape") {
+            event.preventDefault();
+            setSearchText("");
+            inputRef.current?.blur();
+        }
+    }
     return (
         <div className="flex max-w-lg w-full min-w-fit my-2">
-            <div className="flex items-center cursor-text max-w-lg max-h-full h-full w-full rounded-lg p-2 bg-slate-800 text-white enabled::bg-slate-900 focus-within:outline focus-within:outline-2">
+            <div
+                className="flex items-center cursor-text max-w-lg max-h-full h-full w-full rounded-lg p-2 bg-slate-800 text-white enabled::bg-slate-900 focus-within:outline focus-within:outline-2"
+                onClick={() => inputRef.current?.focus()}>
                 <button
                     onClick={() => inputRef.current?.focus()}
                     onFocus={() => inputRef.current?.focus()}
@@ -41,6 +55,7 @@ export function TaskSearch({
                     value={search}
                     onChange={handleSearchChanged}
                     ref={inputRef}
+                    onKeyDown={handleKeyDown}
                 />
             </div>
         </div>
