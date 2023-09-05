@@ -1,50 +1,44 @@
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
+import type { TaskDataType } from "../types/TaskDataType";
 
 interface TasksState {
-    todos: ITaskData[];
+    todoListName: string;
+    todos: TaskDataType[];
 }
 
 export type TodoContextType = {
-    todos: ITaskData[];
-    setTodos: (todos: ITaskData[]) => any;
+    todos: TaskDataType[];
+    setTodos: (todos: TaskDataType[]) => void;
+    listName: string;
+    setListName: (listName: string) => void;
 };
 
 const initialState: TasksState = {
+    todoListName: "Untitled",
     todos: [],
 };
 
 export const TasksContext = createContext<TodoContextType | null>(null);
 
 export function TasksProvider({ children }: { children?: React.ReactNode }) {
-    const [state, setState] = useState(initialState);
+    const { state, setState } = useLocalStorage("state", initialState);
 
-    const isMounted = useRef(false);
-    const setTodos = (todos: ITaskData[]) => {
-        console.log(todos);
-        setState({ todos });
+    const setTodos = (todos: TaskDataType[]) => {
+        setState({ ...state, todos });
     };
 
-    useEffect(() => {
-        const stringState = localStorage.getItem("state");
-        if (!stringState) return;
-        const loadedState: TasksState = JSON.parse(stringState);
-        if (!loadedState) return;
-        setState({ ...loadedState });
-    }, []);
-
-    useEffect(() => {
-        if (isMounted.current === true) {
-            localStorage.setItem("state", JSON.stringify(state));
-        } else {
-            isMounted.current = true;
-        }
-    }, [state]);
+    const setListName = (listName: string) => {
+        setState({ ...state, todoListName: listName });
+    };
 
     return (
         <TasksContext.Provider
             value={{
                 todos: state.todos,
                 setTodos,
+                listName: state.todoListName,
+                setListName,
             }}>
             {children}
         </TasksContext.Provider>

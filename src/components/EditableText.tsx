@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 type EditableTextProps = {
@@ -60,6 +60,10 @@ export function EditableText({
 
         onTextChanged?.(currentText);
     }
+
+    useEffect(() => {
+        setTextState(text);
+    }, [text]);
 
     return (
         <div

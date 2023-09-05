@@ -1,14 +1,15 @@
-import { EditableText } from "./EditableText";
-import { Button } from "./Button";
+import { EditableText } from "../components/EditableText";
+import { Button } from "../components/Button";
 import { FaTrash } from "react-icons/fa";
-import { useTasks } from "../hooks/useTasks";
+import useTasks from "../hooks/useTasks";
 import { MouseEvent } from "react";
 import { twMerge } from "tailwind-merge";
-import { Icon } from "./Icon";
-import { CheckBox } from "./CheckBox";
+import { Icon } from "../components/Icon";
+import { CheckBox } from "../components/CheckBox";
+import type { TaskDataType } from "../types/TaskDataType";
 
 type TaskItemProps = {
-    task: ITaskData;
+    task: TaskDataType;
     highlight?: string;
 };
 

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useTasks } from "../hooks/useTasks";
+import useTasks from "../hooks/useTasks";
 import { TaskItem } from "./TaskItem";
 import { TaskSearch } from "./TaskSearch";
-import { Button } from "./Button";
+import { Button } from "../components/Button";
 import { FaPlus } from "react-icons/fa";
-import { Icon } from "./Icon";
+import { Icon } from "../components/Icon";
+import type { TaskDataType } from "../types/TaskDataType";
 
 type TaskListProps = {
     listTitle: string;
@@ -34,7 +35,7 @@ export function TasksList({ listTitle }: TaskListProps) {
         });
     }
 
-    const filteredTasks = tasks.filter((task: ITaskData) =>
+    const filteredTasks = tasks.filter((task: TaskDataType) =>
         task.name.toLowerCase().includes(searchText.toLowerCase())
     );
     return (
@@ -45,7 +46,7 @@ export function TasksList({ listTitle }: TaskListProps) {
                 onEnterText={handleSearchEnter}
             />
             <div className="max-w-lg min-w-fit w-full flex flex-col justify-start items-center overflow-y-visible overflow-x-hidden max-h-64 scroll-smooth">
-                {filteredTasks.map((_task: ITaskData) => {
+                {filteredTasks.map((_task: TaskDataType) => {
                     return (
                         <TaskItem
                             key={String(_task.id)}

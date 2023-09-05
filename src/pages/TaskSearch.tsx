@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
-import { Icon } from "./Icon";
+import { Icon } from "../components/Icon";
 
 interface TaskSearchProps {
     className?: string;

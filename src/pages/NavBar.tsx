@@ -1,4 +1,4 @@
-import { Button } from "./Button";
+import { Button } from "../components/Button";
 
 export function NavBar() {
     return (
