@@ -46,12 +46,15 @@ export default function TaskList() {
                 parentClassName="flex items-center justify-center"
                 onTextChanged={(text) => setListName(text)}
             />
-            <hr className="max-w-lg w-full border-t-2 border-b-[1px] my-1 rounded-full" />
+
+            <hr className="max-w-lg w-full border-y-2.5 my-1 rounded-full" />
+
             <SearchBar
                 search={searchText}
                 setSearchText={setSearchText}
                 onEnterText={handleSearchEnter}
             />
+
             <div className="max-w-lg min-w-fit w-full flex flex-col justify-start items-center overflow-y-visible overflow-x-hidden max-h-64 scroll-smooth">
                 {filteredTasks.map((_task: TaskDataType) => {
                     return (
@@ -63,6 +66,7 @@ export default function TaskList() {
                     );
                 })}
             </div>
+
             {searchText && (
                 <Button
                     buttonStyle="primary"
@@ -70,7 +74,7 @@ export default function TaskList() {
                     className="flex text-white min-w-fit max-w-lg w-full py-2 my-2 justify-center items-center"
                     onClick={handleAddBtnClick}>
                     <span className="flex px-4">
-                        <Icon className="flex w-4 h-4 text-white m-1">
+                        <Icon className="flex w-4 h-4 text-white mx-2.5 my-1">
                             <FaPlus />
                         </Icon>
                         Add "{searchText}" to&#160;

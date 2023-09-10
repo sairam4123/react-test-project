@@ -23,17 +23,25 @@ export function EditableText({
     highlight,
 }: EditableTextProps) {
     const [textState, setTextState] = useState(text);
+    const [prevTextState, setPrevTextState] = useState(text);
     const [isEditing, setIsEditing] = useState(false);
 
     const spanRef = useRef<HTMLSpanElement | null>(null);
 
+    function setText(currentText: string) {
+        setTextState(currentText);
+        onTextChanged?.(currentText);
+        setIsEditing(false);
+    }
+
     function handleSubmit() {
         const currentText = textState || (defaultText ?? "");
-        setTextState(currentText);
+        setText(currentText);
+    }
 
-        onTextChanged?.(currentText);
-
-        setIsEditing(false);
+    function handleEscape() {
+        const currentText = prevTextState || (defaultText ?? "");
+        setText(currentText);
     }
 
     function handleKeyDown(event: React.KeyboardEvent<HTMLSpanElement>) {
@@ -42,13 +50,14 @@ export function EditableText({
             handleSubmit();
         } else if (event.key === "Escape") {
             event.preventDefault();
-            handleSubmit();
+            handleEscape();
         }
     }
 
     function handleClick(event: React.MouseEvent<HTMLSpanElement>) {
         event.preventDefault();
         event.stopPropagation();
+        setPrevTextState(textState);
         setIsEditing(true);
     }
 
