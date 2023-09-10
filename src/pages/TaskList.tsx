@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useTasks from "../hooks/useTasks";
 import { TaskItem } from "./TaskItem";
-import { TaskSearch } from "./TaskSearch";
+import { SearchBar } from "../components/SearchBar";
 import { Button } from "../components/Button";
 import { FaPlus } from "react-icons/fa";
 import { Icon } from "../components/Icon";
@@ -40,7 +40,7 @@ export function TasksList({ listTitle }: TaskListProps) {
     );
     return (
         <>
-            <TaskSearch
+            <SearchBar
                 search={searchText}
                 setSearchText={setSearchText}
                 onEnterText={handleSearchEnter}

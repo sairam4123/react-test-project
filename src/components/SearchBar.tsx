@@ -1,21 +1,21 @@
 import { useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
-import { Icon } from "../components/Icon";
+import { Icon } from "./Icon";
 
-interface TaskSearchProps {
+interface SearchBarProps {
     className?: string;
     search: string;
     onEnterText?: () => void;
     setSearchText: (text: string) => void;
 }
 
-export function TaskSearch({
+export function SearchBar({
     search,
     setSearchText,
     onEnterText,
     className,
-}: TaskSearchProps) {
+}: SearchBarProps) {
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     function handleSearchChanged(event: React.ChangeEvent<HTMLInputElement>) {

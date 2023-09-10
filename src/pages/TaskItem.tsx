@@ -16,7 +16,8 @@ type TaskItemProps = {
 export function TaskItem({ task, highlight }: TaskItemProps) {
     const { removeTask, toggleTask, updateTask } = useTasks();
 
-    function handleCheck() {
+    function handleCheck(e: React.ChangeEvent<HTMLInputElement>) {
+        console.log(e.currentTarget.checked);
         toggleTask(task.id);
     }
 
@@ -25,6 +26,7 @@ export function TaskItem({ task, highlight }: TaskItemProps) {
     }
 
     function handleClick() {
+        // console.log(e.currentTarget.checked);
         toggleTask(task.id);
     }
 

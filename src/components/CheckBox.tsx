@@ -22,18 +22,20 @@ export function CheckBox({
     disabled,
     ...checkProps
 }: ICheckBox) {
+
     const [checkedState, setCheckedState] = useState(checked);
     const inputButtonRef = useRef<HTMLButtonElement | null>(null);
+    const inputCheckboxRef = useRef<HTMLInputElement | null>(null);
 
     function handleClick(event: React.MouseEvent<HTMLSpanElement>) {
         event.preventDefault();
-        event.stopPropagation();
-        if (disabled) {
-            console.log(disabled);
-            return;
-        }
+        // event.stopPropagation();  // i fixed it but it wont work in the future..
+
+        if (disabled) return;
+
         inputButtonRef.current?.focus();
         setCheckedState(!checkedState);
+
     }
 
     function handleSubmit(event: React.FormEvent<HTMLButtonElement>) {
@@ -51,7 +53,7 @@ export function CheckBox({
                 className="flex my-auto items-center justify-center"
                 onClick={handleClick}>
                 <button
-                    role="checkbox"
+                    role="button"
                     ref={inputButtonRef}
                     className="peer sr-only"
                     disabled={disabled}
@@ -60,8 +62,10 @@ export function CheckBox({
                 <input
                     type="checkbox"
                     className="sr-only"
+                    ref={inputCheckboxRef}
                     checked={checkedState}
                     onChange={onChange}
+                    aria-checked={checkedState}
                     disabled
                     {...checkProps}
                 />
@@ -77,3 +81,4 @@ export function CheckBox({
         </label>
     );
 }
+
