@@ -15,7 +15,7 @@ export type TodoContextType = {
 };
 
 const initialState: TasksState = {
-    todoListName: "Untitled",
+    todoListName: "Untitled List",
     todos: [],
 };
 

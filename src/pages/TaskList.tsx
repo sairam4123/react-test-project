@@ -1,17 +1,16 @@
-import { useState } from "react";
+import useTaskListName from "../hooks/useTaskListName";
+import { EditableText } from "../components/EditableText";
 import useTasks from "../hooks/useTasks";
-import { TaskItem } from "./TaskItem";
+import { useState } from "react";
 import { SearchBar } from "../components/SearchBar";
-import { Button } from "../components/Button";
+import { TaskItem } from "./TaskItem";
 import { FaPlus } from "react-icons/fa";
+import { Button } from "../components/Button";
 import { Icon } from "../components/Icon";
 import type { TaskDataType } from "../types/TaskDataType";
 
-type TaskListProps = {
-    listTitle: string;
-};
-
-export function TasksList({ listTitle }: TaskListProps) {
+export default function TaskList() {
+    const { listName, setListName } = useTaskListName();
     const { todos: tasks, createTask } = useTasks();
 
     const [searchText, setSearchText] = useState("");
@@ -39,7 +38,15 @@ export function TasksList({ listTitle }: TaskListProps) {
         task.name.toLowerCase().includes(searchText.toLowerCase())
     );
     return (
-        <>
+        <main className="flex flex-col w-full items-center justify-center">
+            <EditableText
+                text={listName}
+                defaultText="Untitled List"
+                className="font-extrabold text-lg text-white text-center h-fit px-4"
+                parentClassName="flex items-center justify-center"
+                onTextChanged={(text) => setListName(text)}
+            />
+            <hr className="max-w-lg w-full border-t-2 border-b-[1px] my-1 rounded-full" />
             <SearchBar
                 search={searchText}
                 setSearchText={setSearchText}
@@ -68,11 +75,11 @@ export function TasksList({ listTitle }: TaskListProps) {
                         </Icon>
                         Add "{searchText}" to&#160;
                         <span className="font-bold h-fit w-fit">
-                            {listTitle}
+                            {listName}
                         </span>
                     </span>
                 </Button>
             )}
-        </>
+        </main>
     );
 }

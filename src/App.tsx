@@ -1,6 +1,6 @@
 import { NavBar } from "./pages/NavBar";
 import { TasksProvider } from "./contexts/TasksContext";
-import NamedTaskList from "./pages/NamedTaskList";
+import TaskList from "./pages/TaskList";
 
 function App() {
     return (
@@ -8,7 +8,7 @@ function App() {
             <NavBar />
             <div className="flex bg-slate-900 h-full items-center justify-center rounded-md p-2 m-3 mt-1.5">
                 <TasksProvider>
-                    <NamedTaskList />
+                    <TaskList />
                 </TasksProvider>
             </div>
         </div>
